@@ -5,37 +5,30 @@ struct TicketSuccessView: View {
     let title: String
     var onDone: () -> Void
 
-    @State private var ticketOffset: CGFloat = ScreenLayout.scaled(0.47)
+    @State private var ticketOffset: CGFloat = ScreenLayout.scaled(0.3)
     @State private var ticketRotation: Double = -8
     @State private var ticketOpacity: Double = 0
 
     var body: some View {
-        VStack(spacing: screenHeight * 0.028) {
-            Text("Reservation Confirmed")
-                .font(AppTypography.display(0.03))
-                .foregroundStyle(AppColors.textPrimary)
+        ScrollView {
+            VStack(spacing: screenHeight * 0.018) {
+                Text("Reservation Confirmed")
+                    .font(AppTypography.display(0.026))
+                    .foregroundStyle(AppColors.textPrimary)
 
-            VStack(spacing: screenHeight * 0.02) {
-                Image(systemName: "ticket.fill")
-                    .font(.system(size: screenHeight * 0.05))
-                    .foregroundStyle(AppColors.brandGold)
+                ticketCard
+                    .offset(y: ticketOffset)
+                    .rotationEffect(.degrees(ticketRotation))
+                    .opacity(ticketOpacity)
 
-                Text(title)
-                    .font(AppTypography.accentTitle(0.022))
-                    .foregroundStyle(AppColors.white)
-
-                QRCodeCard(code: confirmationCode, caption: "Your digital pass")
+                PrimaryButton(title: "Done", action: onDone)
             }
-            .padding(screenHeight * 0.05)
-            .glassCard(isPremium: true)
-            .offset(y: ticketOffset)
-            .rotationEffect(.degrees(ticketRotation))
-            .opacity(ticketOpacity)
-
-            PrimaryButton(title: "Done", action: onDone)
+            .padding(.horizontal, contentHorizontalPadding)
+            .padding(.top, screenHeight * 0.02)
+            .padding(.bottom, screenHeight * 0.11)
         }
-        .padding(.horizontal, contentHorizontalPadding)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .scrollIndicators(.hidden)
+        .appScrollViewSupport()
         .appScreenBackground()
         .onAppear {
             AppHaptics.success()
@@ -47,9 +40,45 @@ struct TicketSuccessView: View {
             }
         }
     }
+
+    private var ticketCard: some View {
+        VStack(spacing: screenHeight * 0.014) {
+            Image(systemName: "ticket.fill")
+                .font(.system(size: screenHeight * 0.038))
+                .foregroundStyle(AppColors.brandGold)
+
+            Text(title)
+                .font(AppTypography.accentTitle(0.019))
+                .foregroundStyle(AppColors.white)
+                .multilineTextAlignment(.center)
+
+            if let qrImage = QRCodeGenerator.image(from: confirmationCode) {
+                qrImage
+                    .interpolation(.none)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: screenHeight * 0.2, height: screenHeight * 0.2)
+                    .padding(screenHeight * 0.028)
+                    .background(AppColors.white)
+                    .clipShape(RoundedRectangle(cornerRadius: screenHeight * 0.012))
+            }
+
+            Text("Your digital pass")
+                .font(AppTypography.body(0.0154, weight: .medium))
+                .foregroundStyle(AppColors.textSecondary)
+
+            Text(confirmationCode)
+                .font(AppTypography.balance(0.0142))
+                .foregroundStyle(AppColors.brandGold)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, screenHeight * 0.032)
+        .padding(.horizontal, screenHeight * 0.024)
+        .glassCard(isPremium: true)
+    }
 }
 
 #Preview {
-    TicketSuccessView(confirmationCode: "HRH-9X21-K4", title: "Steak House", onDone: {})
+    TicketSuccessView(confirmationCode: "HRH-9X21-K4", title: "Blackjack · BK-123456", onDone: {})
         .background(AppColors.background)
 }
