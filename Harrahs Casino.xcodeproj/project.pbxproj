@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DD008F8F2FBF7CB500A262E8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DD008F8E2FBF7CB500A262E8 /* PrivacyInfo.xcprivacy */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		DD008BB02FBF33FD00A262E8 /* Harrahs Casino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Harrahs Casino.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD008F8E2FBF7CB500A262E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		DD008BA72FBF33FD00A262E8 = {
 			isa = PBXGroup;
 			children = (
+				DD008F8E2FBF7CB500A262E8 /* PrivacyInfo.xcprivacy */,
 				DD008BB22FBF33FD00A262E8 /* Harrahs Casino */,
 				DD008BB12FBF33FD00A262E8 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD008F8F2FBF7CB500A262E8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
